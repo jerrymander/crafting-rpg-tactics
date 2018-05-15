@@ -11,7 +11,13 @@ config_version=3
 [application]
 
 config/name="crafting tactics"
+run/main_scene="res://Base.tscn"
 config/icon="res://icon.png"
+
+[display]
+
+window/size/width=360
+window/size/height=640
 
 [rendering]
 
