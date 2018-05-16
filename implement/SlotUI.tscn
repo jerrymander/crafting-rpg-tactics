@@ -1,8 +1,9 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://CraftingTactics_Object_Tilesheet.png" type="Texture" id=1]
+[ext_resource path="res://SlotUI.gd" type="Script" id=1]
+[ext_resource path="res://CraftingTactics_Object_Tilesheet.png" type="Texture" id=2]
 
-[node name="SlotUI" type="PanelContainer" index="0"]
+[node name="SlotUI" type="PanelContainer"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -16,11 +17,12 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
+script = ExtResource( 1 )
 _sections_unfolded = [ "Margin", "Rect", "Visibility" ]
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 centered = false
 vframes = 4
 hframes = 4
