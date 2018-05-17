@@ -1,6 +1,7 @@
 extends Control
 
 var slots
+var player
 
 func _ready():
 	randomize()
@@ -25,6 +26,9 @@ func _reset():
 			var slot = slot_preload.new()
 			slots[x].append(slot)
 	
+	player = preload("res://Player.gd").new()
+	slots[2][2].entities.append(player)
+	
 	_fill_slot("Tree", 3)
 	_fill_slot("Boulder", 3)
 	_fill_slot("Bush", 2)
@@ -38,9 +42,15 @@ func _reset():
 			slot_ui.get_node("Click").connect("pressed", self, "_select_slot", [slot_ui])
 			
 			slot_ui.slot = slots[x][y]
+			_redraw(slot_ui)
 			slot_ui.update_sprite()
 			
 			grid.add_child(slot_ui)
+
+func _redraw(slot_ui):
+	slot_ui.update_sprite()
+	if (slot_ui.slot.entities.has(player)):
+		slot_ui.self_modulate = ColorN("aquamarine", 1)
 
 func _fill_slot(item, count):
 	for x in range(count):
@@ -49,13 +59,16 @@ func _fill_slot(item, count):
 		empty_slot.quantity = randi() % 20 + 20
 
 func _select_slot(slot_ui):
-	$Info/Text.bbcode_text = slot_ui.slot.description()
+	var bbcode = ""
+	for line in slot_ui.slot.description():
+		bbcode = bbcode + line + "\n"
+	$Info/Text.bbcode_text = bbcode
 
 func _get_empty_slot():
 	var empty_slots = []
 	for x in range (slots.size()):
 		for y in range (slots[x].size()):
-			if (slots[x][y].item == "Empty"):
+			if slots[x][y].item == "Empty":
 				empty_slots.append(slots[x][y])
 	return empty_slots[randi() % empty_slots.size()]
 
