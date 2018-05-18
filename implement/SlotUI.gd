@@ -2,8 +2,6 @@ extends PanelContainer
 
 var frames = {}
 
-var slot
-
 func _ready():
 	pass
 
@@ -16,8 +14,13 @@ func _init():
 	frames["Rock"] = [6, 7]
 
 func update_sprite():
-	var item_frames = frames[slot.item]
+	var item_frames = frames[$Slot.item]
 	$Sprite.frame = item_frames[randi() % item_frames.size()]
+	
+	if $Slot/Entities/Player:
+		self_modulate = ColorN("aquamarine", 1)
+		for neighbor in $Slot.neighbors:
+			neighbor.get_parent().self_modulate = ColorN("palegreen", 1)
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
