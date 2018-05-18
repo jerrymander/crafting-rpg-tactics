@@ -1,4 +1,4 @@
-var current_slot = null
+extends Node
 
 func description():
 	return "You!"

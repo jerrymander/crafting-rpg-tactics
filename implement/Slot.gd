@@ -1,7 +1,8 @@
+extends Node
+
 var item = "Empty"
 var quantity = 0
-var neighbors
-var entities = []
+var neighbors = []
 
 func description():
 	var description = []
@@ -21,6 +22,6 @@ func _description_resources():
 
 func _description_entities():
 	var description = []
-	for entity in entities:
+	for entity in $Entities.get_children():
 		description.append(entity.description())
 	return description

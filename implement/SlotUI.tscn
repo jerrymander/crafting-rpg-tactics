@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://SlotUI.gd" type="Script" id=1]
-[ext_resource path="res://CraftingTactics_Object_Tilesheet.png" type="Texture" id=2]
+[ext_resource path="res://Slot.gd" type="Script" id=2]
+[ext_resource path="res://CraftingTactics_Object_Tilesheet.png" type="Texture" id=3]
 
-[node name="SlotUI" type="PanelContainer"]
+[node name="SlotUI" type="PanelContainer" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -20,16 +21,22 @@ size_flags_vertical = 1
 script = ExtResource( 1 )
 _sections_unfolded = [ "Margin", "Rect", "Visibility" ]
 
-[node name="Sprite" type="Sprite" parent="." index="0"]
+[node name="Slot" type="Node" parent="." index="0"]
 
-texture = ExtResource( 2 )
+script = ExtResource( 2 )
+
+[node name="Entities" type="Node" parent="Slot" index="0"]
+
+[node name="Sprite" type="Sprite" parent="." index="1"]
+
+texture = ExtResource( 3 )
 centered = false
 vframes = 4
 hframes = 4
 frame = 9
 _sections_unfolded = [ "Animation", "Offset" ]
 
-[node name="Click" type="TextureButton" parent="." index="1"]
+[node name="Click" type="TextureButton" parent="." index="2"]
 
 anchor_left = 0.0
 anchor_top = 0.0
