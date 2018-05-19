@@ -1,8 +1,9 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Base.gd" type="Script" id=1]
+[ext_resource path="res://UI/BarStat.tscn" type="PackedScene" id=2]
 
-[node name="Base" type="Panel"]
+[node name="Base" type="Panel" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -16,12 +17,41 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 script = ExtResource( 1 )
 
-[node name="Grid" type="Control" parent="." index="0"]
+[node name="Stats" type="VBoxContainer" parent="." index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+_sections_unfolded = [ "Margin", "Rect" ]
+
+[node name="HP" parent="Stats" index="0" instance=ExtResource( 2 )]
+
+margin_right = 84.0
+
+[node name="AP" parent="Stats" index="1" instance=ExtResource( 2 )]
+
+margin_top = 18.0
+margin_right = 84.0
+margin_bottom = 32.0
+
+[node name="Grid" type="Control" parent="." index="1"]
 
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.4
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 0.4
 margin_left = -160.0
 margin_top = -160.0
 margin_right = 160.0
@@ -34,7 +64,7 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 _sections_unfolded = [ "Anchor", "Margin" ]
 
-[node name="Info" type="Panel" parent="." index="1"]
+[node name="Info" type="Panel" parent="." index="2"]
 
 self_modulate = Color( 0, 0, 0, 1 )
 anchor_left = 0.5
@@ -82,7 +112,7 @@ selection_enabled = false
 override_selected_font_color = false
 _sections_unfolded = [ "Anchor", "BBCode", "Margin" ]
 
-[node name="Reset" type="Button" parent="." index="2"]
+[node name="Reset" type="Button" parent="." index="3"]
 
 anchor_left = 0.5
 anchor_top = 0.0

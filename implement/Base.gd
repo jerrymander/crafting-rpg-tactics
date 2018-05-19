@@ -33,6 +33,10 @@ func _reset():
 	
 	player = preload("res://Player.gd").new()
 	player.name = "Player"
+	$Stats/HP.setup("HP", funcref(player, "hp_get"))
+	$Stats/AP.setup("AP", funcref(player, "ap_get"))
+	$Stats/HP.update()
+	$Stats/AP.update()
 	slots[2][2].get_node("Entities").add_child(player)
 	slots[2][2].get_parent().update_sprite()
 	
