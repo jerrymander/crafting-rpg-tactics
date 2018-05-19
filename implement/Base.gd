@@ -3,6 +3,8 @@ extends Control
 var slots
 var player
 
+onready var tileInfoText = $Info/TileInfo/Text
+
 func _ready():
 	randomize()
 	_reset()
@@ -11,7 +13,7 @@ func _ready():
 func _reset():
 	slots = []
 	
-	$Info/Text.bbcode_text = ""
+	tileInfoText.bbcode_text = ""
 	
 	var grid = $Grid
 	var previous = grid.get_children()
@@ -67,10 +69,10 @@ func _fill_slot(item, count):
 		empty_slot.get_parent().update_sprite()
 
 func _select_slot(slot_ui):
-	var bbcode = ""
+	var bbcode = "[center]Tile x,y - Dirt[/center]\n"
 	for line in slot_ui.get_node("Slot").description():
 		bbcode = bbcode + line + "\n"
-	$Info/Text.bbcode_text = bbcode
+	tileInfoText.bbcode_text = bbcode
 
 func _get_empty_slot():
 	var empty_slots = []
