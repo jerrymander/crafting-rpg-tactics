@@ -3,7 +3,7 @@
 [ext_resource path="res://Base.gd" type="Script" id=1]
 [ext_resource path="res://UI/BarStat.tscn" type="PackedScene" id=2]
 
-[node name="Base" type="Panel" index="0"]
+[node name="Base" type="Panel"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -103,7 +103,7 @@ anchor_bottom = 0.0
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 233.0
-margin_bottom = 40.0
+margin_bottom = 41.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
 mouse_filter = 0

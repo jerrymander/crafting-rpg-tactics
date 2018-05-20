@@ -3,6 +3,8 @@ extends Control
 var slots_ui
 var player_ui
 
+var selected_slot
+
 onready var tileInfoText = $Info/TileInfo/Text
 
 func _ready():
@@ -28,7 +30,7 @@ func _reset():
 			slot_ui.name = "SlotUI(%s,%s)" % [x, y]
 			slot_ui.rect_position = Vector2(x*64, y*64)
 			slot_ui.update_sprite()
-			slot_ui.get_node("Click").connect("pressed", self, "_select_slot", [slot_ui])
+			slot_ui.get_node("Click").connect("pressed", self, "_select_slot", [slot_ui, x, y])
 			grid.add_child(slot_ui)
 			slots_ui[x].append(slot_ui)
 			
@@ -68,11 +70,20 @@ func _fill_slot(item, count):
 		empty_slot.quantity = randi() % 20 + 20
 		empty_slot.get_parent().update_sprite()
 
-func _select_slot(slot_ui):
-	var bbcode = "[center]Tile x,y - Dirt[/center]\n"
-	for line in slot_ui.get_node("Slot").description():
-		bbcode = bbcode + line + "\n"
-	tileInfoText.bbcode_text = bbcode
+func _select_slot(slot_ui, x, y):
+	if selected_slot == slot_ui:
+		slot_ui.deselect()
+		selected_slot = null
+		tileInfoText.bbcode_text = ""
+	else:
+		if selected_slot != null:
+			selected_slot.deselect()
+		selected_slot = slot_ui
+		slot_ui.select()
+		var bbcode = "[center]Tile %s,%s - Dirt[/center]\n" % [x, y]
+		for line in slot_ui.get_node("Slot").description():
+			bbcode = bbcode + line + "\n"
+		tileInfoText.bbcode_text = bbcode
 
 func _get_empty_slot():
 	var empty_slots = []
