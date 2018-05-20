@@ -11,6 +11,7 @@ func _ready():
 	randomize()
 	_reset()
 	$Reset.connect("pressed", self, "_reset")
+	add_to_group("player_update")
 
 func _reset():
 	slots_ui = []
@@ -18,9 +19,10 @@ func _reset():
 	tileInfoText.bbcode_text = ""
 	
 	var grid = $Grid
-	var previous = grid.get_children()
-	for child in previous:
-		grid.remove_child(child)
+	_remove_and_free_children(grid)
+	
+	selected_slot = null
+	_remove_and_free_children($Info/ActionMenu/ActionList)
 	
 	var slot_ui_preload = preload("res://SlotUI.tscn")
 	for x in range(5):
@@ -37,10 +39,9 @@ func _reset():
 	_link_neighbors()
 	
 	player_ui = preload("res://Player/PlayerUI.tscn").instance()
-	$Stats/HP.setup("HP", funcref(player_ui.player(), "hp_get"))
-	$Stats/AP.setup("AP", funcref(player_ui.player(), "ap_get"))
-	$Stats/HP.update()
-	$Stats/AP.update()
+	$Stats/HP.setup("HP")
+	$Stats/AP.setup("AP")
+	_update_stats(player_ui.player())
 	slots_ui[2][2].add_child(player_ui)
 	slots_ui[2][2].update_sprite()
 	
@@ -84,6 +85,24 @@ func _select_slot(slot_ui, x, y):
 		for line in slot_ui.get_node("Slot").description():
 			bbcode = bbcode + line + "\n"
 		tileInfoText.bbcode_text = bbcode
+	_update_action_menu()
+
+func _update_action_menu():
+	var player_slot_ui = player_ui.get_parent()
+	if selected_slot == null:
+		_show_actions(player_slot_ui.available_actions(player_slot_ui))
+	else:
+		_show_actions(selected_slot.available_actions(player_slot_ui))
+
+func _show_actions(actions):
+	var action_list = $Info/ActionMenu/ActionList
+	_remove_and_free_children(action_list)
+	for action in actions:
+		action.connect("pressed", self, "_pre_action", [action])
+		$Info/ActionMenu/ActionList.add_child(action)
+
+func _pre_action(action):
+	action.do_action(player_ui.player())
 
 func _get_empty_slot():
 	var empty_slots = []
@@ -92,6 +111,19 @@ func _get_empty_slot():
 			if slots_ui[x][y].slot().item == "Empty":
 				empty_slots.append(slots_ui[x][y])
 	return empty_slots[randi() % empty_slots.size()]
+
+func _remove_and_free_children(parent):
+	var children = parent.get_children()
+	for child in children:
+		parent.remove_child(child)
+		child.queue_free()
+
+func player_update(player):
+	_update_stats(player)
+
+func _update_stats(player):
+	$Stats/HP.update(player.hp)
+	$Stats/AP.update(player.ap)
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.

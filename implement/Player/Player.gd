@@ -6,8 +6,8 @@ var ap = 12
 func description():
 	return "You!"
 
-func hp_get():
-	return hp
+func hp_add(amount):
+	hp += amount
 
-func ap_get():
-	return ap
+func ap_add(amount):
+	ap += amount

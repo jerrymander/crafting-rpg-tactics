@@ -7,10 +7,9 @@ func _ready():
 	# Initialization here
 	pass
 
-func setup(label, value_get_function):
+func setup(label):
 	$Label.text = label;
-	self.value_get_function = value_get_function
 
-func update():
+func update(value):
 	# switch to bars display eventually
-	$Value.text = str(value_get_function.call_func())
+	$Value.text = str(value)
