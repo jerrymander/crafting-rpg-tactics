@@ -17,10 +17,12 @@ func update_sprite():
 	var item_frames = frames[$Slot.item]
 	$Sprite.frame = item_frames[randi() % item_frames.size()]
 	
-	if $Slot/Entities/Player:
-		self_modulate = ColorN("aquamarine", 1)
+	if $PlayerUI:
 		for neighbor in $Slot.neighbors:
 			neighbor.get_parent().self_modulate = ColorN("palegreen", 1)
+
+func slot():
+	return $Slot
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
