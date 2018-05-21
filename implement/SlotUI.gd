@@ -38,10 +38,20 @@ func _set_style(style):
 
 func available_actions(player_slot_ui):
 	var ACTION_REST = preload("res://Actions/ActionRest.gd")
+	var ACTION_GATHER = preload("res://Actions/ActionGather.gd")
 	var actions = []
 	if _has_player():
-		actions.append(_create_action(ACTION_REST))
+		var player = get_node("PlayerUI").player()
+		var action_rest = _create_action(ACTION_REST)
+		action_rest.player = player
+		actions.append(action_rest)
+		if slot().has_resource():
+			var action_gather = _create_action(ACTION_GATHER)
+			action_gather.slot = slot()
+			action_gather.player = player
+			actions.append(action_gather)
 	else:
+		# action_walk
 		pass
 	return actions
 

@@ -25,3 +25,12 @@ func _description_entities():
 	for entity in $Entities.get_children():
 		description.append(entity.description())
 	return description
+
+func has_resource():
+	return item != "Empty"
+
+func gather():
+	if quantity > 0:
+		quantity -= 5
+		if quantity <= 0:
+			item = "Empty"

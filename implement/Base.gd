@@ -12,6 +12,7 @@ func _ready():
 	_reset()
 	$Reset.connect("pressed", self, "_reset")
 	add_to_group("player_update")
+	add_to_group("tile_update")
 
 func _reset():
 	slots_ui = []
@@ -50,6 +51,8 @@ func _reset():
 	_fill_slot("Bush", 2)
 	_fill_slot("Log", 1)
 	_fill_slot("Rock", 2)
+	
+	_update_action_menu()
 
 func _link_neighbors():
 	for x in range(slots_ui.size()):
@@ -75,17 +78,26 @@ func _select_slot(slot_ui, x, y):
 	if selected_slot == slot_ui:
 		slot_ui.deselect()
 		selected_slot = null
-		tileInfoText.bbcode_text = ""
+		_update_tile_info(null)
 	else:
 		if selected_slot != null:
 			selected_slot.deselect()
 		selected_slot = slot_ui
 		slot_ui.select()
-		var bbcode = "[center]Tile %s,%s - Dirt[/center]\n" % [x, y]
-		for line in slot_ui.get_node("Slot").description():
+		_update_tile_info(selected_slot.slot())
+	_update_action_menu()
+
+func tile_update(slot):
+	_update_tile_info(slot)
+
+func _update_tile_info(slot):
+	if slot == null:
+		tileInfoText.bbcode_text = ""
+	else:
+		var bbcode = "[center]Tile %s,%s - Dirt[/center]\n" % [0, 0]
+		for line in slot.description():
 			bbcode = bbcode + line + "\n"
 		tileInfoText.bbcode_text = bbcode
-	_update_action_menu()
 
 func _update_action_menu():
 	var player_slot_ui = player_ui.get_parent()
@@ -102,7 +114,7 @@ func _show_actions(actions):
 		$Info/ActionMenu/ActionList.add_child(action)
 
 func _pre_action(action):
-	action.do_action(player_ui.player())
+	action.do_action()
 
 func _get_empty_slot():
 	var empty_slots = []
