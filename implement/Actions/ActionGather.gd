@@ -7,7 +7,9 @@ var slot
 var player
 
 func _ready():
-	text = "Gather"
+	text = "Gather (1)"
+	if player.ap < 1:
+		disabled = true
 
 func do_action():
 	player.ap_add(-1)

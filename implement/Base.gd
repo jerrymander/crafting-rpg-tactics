@@ -33,7 +33,11 @@ func _reset():
 			slot_ui.name = "SlotUI(%s,%s)" % [x, y]
 			slot_ui.rect_position = Vector2(x*64, y*64)
 			slot_ui.update_sprite()
-			slot_ui.get_node("Click").connect("pressed", self, "_select_slot", [slot_ui, x, y])
+			slot_ui.get_node("Click").connect("pressed", self, "_select_slot", [slot_ui])
+			var slot = slot_ui.slot()
+			slot.x = x
+			slot.y = y
+			
 			grid.add_child(slot_ui)
 			slots_ui[x].append(slot_ui)
 			
@@ -74,7 +78,7 @@ func _fill_slot(item, count):
 		empty_slot.quantity = randi() % 20 + 20
 		empty_slot.get_parent().update_sprite()
 
-func _select_slot(slot_ui, x, y):
+func _select_slot(slot_ui):
 	if selected_slot == slot_ui:
 		slot_ui.deselect()
 		selected_slot = null
@@ -94,7 +98,7 @@ func _update_tile_info(slot):
 	if slot == null:
 		tileInfoText.bbcode_text = ""
 	else:
-		var bbcode = "[center]Tile %s,%s - Dirt[/center]\n" % [0, 0]
+		var bbcode = "[center]Tile %s,%s - Dirt[/center]\n" % [slot.x, slot.y]
 		for line in slot.description():
 			bbcode = bbcode + line + "\n"
 		tileInfoText.bbcode_text = bbcode
@@ -132,6 +136,7 @@ func _remove_and_free_children(parent):
 
 func player_update(player):
 	_update_stats(player)
+	_update_action_menu()
 
 func _update_stats(player):
 	$Stats/HP.update(player.hp)

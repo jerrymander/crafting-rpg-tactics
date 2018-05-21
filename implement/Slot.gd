@@ -1,5 +1,7 @@
 extends Node
 
+var x
+var y
 var item = "Empty"
 var quantity = 0
 var neighbors = []
