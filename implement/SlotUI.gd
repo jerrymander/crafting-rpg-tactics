@@ -4,9 +4,41 @@ var style_default = preload("res://UI/SlotUI.tres")
 var style_selected = preload("res://UI/SlotUI_selected.tres")
 
 var frames = {}
+var subtile_sprites = []
 
 func _ready():
-	pass
+	var subtiles = slot().subtiles
+	var subtiles_height = subtiles.size()
+	var subtiles_width = subtiles[0].size()
+	var scale = 1.0/max(subtiles_height, subtiles_width)
+	var slot_rect = self.rect_size
+	slot_rect *= scale
+	for y in range (subtiles_height):
+		for x in range(subtiles_width):
+			var sprite = subtile_sprites[x][y]
+			sprite.scale = Vector2(scale, scale)
+			sprite.position = Vector2(slot_rect.x * x, slot_rect.y * y)
+			sprite.centered = false
+
+func _init_subtile_sprite():
+	$Sprite.queue_free()
+	var tile_sprites = load("res://CraftingTactics_Object_Tilesheet.png")
+	
+	var subtiles = slot().subtiles
+	var subtiles_height = subtiles.size()
+	var subtiles_width = subtiles[0].size()
+	for y in range(subtiles_height):
+		var row = []
+		for x in range(subtiles_width):
+			var sprite = Sprite.new()
+			sprite.texture = tile_sprites
+			sprite.hframes = 4
+			sprite.vframes = 4
+			sprite.frame = frames["Log"][0]
+			row.append(sprite)
+			add_child(sprite)
+		subtile_sprites.append(row)
+
 
 func _init():
 	frames["Boulder"] = [3, 4, 5]
@@ -17,8 +49,19 @@ func _init():
 	frames["Rock"] = [6, 7]
 
 func update_sprite():
-	var item_frames = frames[$Slot.item]
-	$Sprite.frame = item_frames[randi() % item_frames.size()]
+	if subtile_sprites.empty():
+		_init_subtile_sprite()
+	
+	var subtiles = slot().subtiles
+	var subtiles_height = subtiles.size()
+	var subtiles_width = subtiles[0].size()
+	for y in range(subtiles_height):
+		for x in range(subtiles_width):
+			var item = "Empty"
+			if !subtiles[x][y].empty():
+				item = subtiles[x][y].keys().front()
+			var item_frames = frames[item]
+			subtile_sprites[x][y].frame = item_frames[randi() % item_frames.size()]
 	
 	#if _has_player():
 	#	for neighbor in $Slot.neighbors:
