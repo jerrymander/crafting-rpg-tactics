@@ -39,7 +39,6 @@ func _init_subtile_sprite():
 			add_child(sprite)
 		subtile_sprites.append(row)
 
-
 func _init():
 	frames["Boulder"] = [3, 4, 5]
 	frames["Tree"] = [9, 10, 11]

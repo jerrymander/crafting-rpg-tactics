@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Base.gd" type="Script" id=1]
 [ext_resource path="res://UI/BarStat.tscn" type="PackedScene" id=2]
+[ext_resource path="res://UI/SubtileUI.gd" type="Script" id=3]
+[ext_resource path="res://UI/SlotUI.tres" type="StyleBox" id=4]
 
-[node name="Base" type="Panel"]
+[node name="Base" type="Panel" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -49,9 +51,9 @@ margin_bottom = 32.0
 [node name="Grid" type="Control" parent="." index="1"]
 
 anchor_left = 0.5
-anchor_top = 0.4
+anchor_top = 0.35
 anchor_right = 0.5
-anchor_bottom = 0.4
+anchor_bottom = 0.35
 margin_left = -160.0
 margin_top = -160.0
 margin_right = 160.0
@@ -67,7 +69,7 @@ size_flags_vertical = 1
 
 anchor_left = 0.0
 anchor_top = 0.8
-anchor_right = 1.0
+anchor_right = 0.3
 anchor_bottom = 0.8
 margin_top = -60.0
 margin_bottom = 60.0
@@ -83,10 +85,10 @@ size_flags_vertical = 1
 self_modulate = Color( 0, 0, 0, 1 )
 anchor_left = 0.0
 anchor_top = 0.0
-anchor_right = 0.0
+anchor_right = 1.0
 anchor_bottom = 0.4
-margin_left = 60.0
-margin_right = 300.0
+margin_left = 10.0
+margin_right = -10.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -102,7 +104,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 233.0
+margin_right = 80.0
 margin_bottom = 41.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
@@ -127,10 +129,10 @@ override_selected_font_color = false
 self_modulate = Color( 0, 0, 0, 1 )
 anchor_left = 0.0
 anchor_top = 0.4
-anchor_right = 0.0
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 60.0
-margin_right = 300.0
+margin_left = 10.0
+margin_right = -10.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -146,7 +148,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 233.0
+margin_right = 80.0
 margin_bottom = 65.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -180,5 +182,44 @@ group = null
 text = "Reset"
 flat = false
 align = 1
+
+[node name="Subtile" type="PanelContainer" parent="." index="4"]
+
+self_modulate = Color( 0, 0, 0, 1 )
+anchor_left = 0.5
+anchor_top = 0.75
+anchor_right = 0.5
+anchor_bottom = 0.75
+margin_left = -80.0
+margin_top = -80.0
+margin_right = 80.0
+margin_bottom = 80.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+script = ExtResource( 3 )
+_sections_unfolded = [ "Visibility" ]
+
+[node name="TileDetail" type="PanelContainer" parent="Subtile" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 153.0
+margin_bottom = 153.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_styles/panel = ExtResource( 4 )
+_sections_unfolded = [ "custom_styles" ]
 
 

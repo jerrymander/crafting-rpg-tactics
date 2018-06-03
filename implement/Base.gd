@@ -9,10 +9,10 @@ onready var tileInfoText = $Info/TileInfo/Text
 
 func _ready():
 	randomize()
-	_reset()
-	$Reset.connect("pressed", self, "_reset")
 	add_to_group("player_update")
 	add_to_group("tile_update")
+	_reset()
+	$Reset.connect("pressed", self, "_reset")
 
 func _reset():
 	slots_ui = []
@@ -48,6 +48,7 @@ func _reset():
 	$Stats/AP.setup("AP")
 	_update_stats(player_ui.player())
 	slots_ui[2][2].add_child(player_ui)
+	get_tree().call_group("player_update", "player_update", player_ui.player())
 	slots_ui[2][2].update_sprite()
 	
 	_fill_slot("Tree", 6)
@@ -137,6 +138,9 @@ func _remove_and_free_children(parent):
 func player_update(player):
 	_update_stats(player)
 	_update_action_menu()
+	
+	var player_slot = player.get_parent().get_parent().slot()
+	$Subtile.update_detail(player_slot)
 
 func _update_stats(player):
 	$Stats/HP.update(player.hp)
