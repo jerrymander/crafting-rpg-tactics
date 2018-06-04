@@ -5,7 +5,7 @@
 [ext_resource path="res://Slot.gd" type="Script" id=3]
 [ext_resource path="res://CraftingTactics_Object_Tilesheet.png" type="Texture" id=4]
 
-[node name="SlotUI" type="PanelContainer"]
+[node name="SlotUI" type="PanelContainer" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0

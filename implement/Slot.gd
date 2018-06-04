@@ -2,8 +2,8 @@ extends Node
 
 var x
 var y
-var item = "Empty"
-var quantity = 0
+var item
+var quantity
 var neighbors = []
 var subtiles = []
 
@@ -26,8 +26,8 @@ func description():
 
 func _description_resources():
 	var description = []
-	if item != "Empty":
-		description.append(item+": "+str(quantity))
+	if item != null:
+		description.append(item.description+": "+str(quantity))
 	return description
 
 func _description_entities():
@@ -37,18 +37,18 @@ func _description_entities():
 	return description
 
 func has_resource():
-	return item != "Empty"
+	return item != null
 
 func has_room():
 	return !_empty_subtiles().empty()
 
 func add_item(item, quantity):
-	self.item = item
+	self.item = load("res://UI/ObjectUI.gd").new(item)
 	self.quantity = quantity
 	
 	var empty_subtiles = _empty_subtiles()
 	var random_empty =  empty_subtiles[randi() % empty_subtiles.size()]
-	random_empty[item] = quantity
+	random_empty[self.item] = quantity
 
 func _empty_subtiles():
 	var empty_subtiles = []
@@ -62,4 +62,4 @@ func gather():
 	if quantity > 0:
 		quantity -= 5
 		if quantity <= 0:
-			item = "Empty"
+			item = null

@@ -3,7 +3,6 @@ extends PanelContainer
 var style_default = preload("res://UI/SlotUI.tres")
 var style_selected = preload("res://UI/SlotUI_selected.tres")
 
-var frames = {}
 var subtile_sprites = []
 
 func _ready():
@@ -22,7 +21,6 @@ func _ready():
 
 func _init_subtile_sprite():
 	$Sprite.queue_free()
-	var tile_sprites = load("res://CraftingTactics_Object_Tilesheet.png")
 	
 	var subtiles = slot().subtiles
 	var subtiles_height = subtiles.size()
@@ -31,21 +29,9 @@ func _init_subtile_sprite():
 		var row = []
 		for x in range(subtiles_width):
 			var sprite = Sprite.new()
-			sprite.texture = tile_sprites
-			sprite.hframes = 4
-			sprite.vframes = 4
-			sprite.frame = frames["Log"][0]
 			row.append(sprite)
 			add_child(sprite)
 		subtile_sprites.append(row)
-
-func _init():
-	frames["Boulder"] = [3, 4, 5]
-	frames["Tree"] = [9, 10, 11]
-	frames["Empty"] = [14]
-	frames["Bush"] = [8, 13]
-	frames["Log"] = [12]
-	frames["Rock"] = [6, 7]
 
 func update_sprite():
 	if subtile_sprites.empty():
@@ -56,11 +42,10 @@ func update_sprite():
 	var subtiles_width = subtiles[0].size()
 	for y in range(subtiles_height):
 		for x in range(subtiles_width):
-			var item = "Empty"
+			var item = load("res://UI/ObjectUI.gd").new("Empty")
 			if !subtiles[x][y].empty():
 				item = subtiles[x][y].keys().front()
-			var item_frames = frames[item]
-			subtile_sprites[x][y].frame = item_frames[randi() % item_frames.size()]
+			item.update_sprite(subtile_sprites[x][y])
 	
 	#if _has_player():
 	#	for neighbor in $Slot.neighbors:
