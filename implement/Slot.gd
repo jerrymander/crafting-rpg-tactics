@@ -5,14 +5,10 @@ var y
 var item
 var quantity
 var neighbors = []
-var subtiles = []
+var subtiles
 
 func _init():
-	for y in range(2):
-		var row = []
-		for x in range(2):
-			row.append({})
-		subtiles.append(row)
+	subtiles = load("res://Tile/Subtiles.gd").new(2, 2)
 
 func description():
 	var description = []
@@ -40,23 +36,13 @@ func has_resource():
 	return item != null
 
 func has_room():
-	return !_empty_subtiles().empty()
+	return subtiles.has_room()
 
 func add_item(item, quantity):
 	self.item = load("res://UI/ObjectUI.gd").new(item)
 	self.quantity = quantity
 	
-	var empty_subtiles = _empty_subtiles()
-	var random_empty =  empty_subtiles[randi() % empty_subtiles.size()]
-	random_empty[self.item] = quantity
-
-func _empty_subtiles():
-	var empty_subtiles = []
-	for x in range (subtiles.size()):
-		for y in range (subtiles[x].size()):
-			if subtiles[x][y].empty():
-				empty_subtiles.append(subtiles[x][y])
-	return empty_subtiles
+	subtiles.add_random(self.item, quantity)
 
 func gather():
 	if quantity > 0:

@@ -12,31 +12,24 @@ func update_detail(player_slot):
 		_init_subtile_sprite(player_slot.subtiles)
 	
 	var subtiles = player_slot.subtiles
-	var subtiles_height = subtiles.size()
-	var subtiles_width = subtiles[0].size()
-	for y in range(subtiles_height):
-		for x in range(subtiles_width):
-			var item = load("res://UI/ObjectUI.gd").new("Empty")
-			if !subtiles[x][y].empty():
-				item = subtiles[x][y].keys().front()
-			item.update_sprite(subtile_sprites[x][y])
+	for y in range(subtiles.height()):
+		for x in range(subtiles.width()):
+			subtiles.item(x, y).update_sprite(subtile_sprites[x][y])
 
 func _init_subtile_sprite(subtiles):
-	var subtiles_height = subtiles.size()
-	var subtiles_width = subtiles[0].size()
-	for y in range(subtiles_height):
+	for y in range(subtiles.height()):
 		var row = []
-		for x in range(subtiles_width):
+		for x in range(subtiles.width()):
 			var sprite = Sprite.new()
 			row.append(sprite)
 			$TileDetail.add_child(sprite)
 		subtile_sprites.append(row)
 	
-	var scale = 1.0/max(subtiles_height, subtiles_width)
+	var scale = 1.0/max(subtiles.height(), subtiles.width())
 	var slot_rect = $TileDetail.rect_size
 	slot_rect *= scale
-	for y in range (subtiles_height):
-		for x in range(subtiles_width):
+	for y in range (subtiles.height()):
+		for x in range(subtiles.width()):
 			var sprite = subtile_sprites[x][y]
 			sprite.scale = Vector2(2*scale, 2*scale)
 			sprite.position = Vector2(slot_rect.x * x, slot_rect.y * y)
