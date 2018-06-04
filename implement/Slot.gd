@@ -2,9 +2,13 @@ extends Node
 
 var x
 var y
-var item = "Empty"
-var quantity = 0
+var item
+var quantity
 var neighbors = []
+var subtiles
+
+func _init():
+	subtiles = load("res://Tile/Subtiles.gd").new(2, 2)
 
 func description():
 	var description = []
@@ -18,8 +22,8 @@ func description():
 
 func _description_resources():
 	var description = []
-	if item != "Empty":
-		description.append(item+": "+str(quantity))
+	if item != null:
+		description.append(item.description+": "+str(quantity))
 	return description
 
 func _description_entities():
@@ -29,10 +33,19 @@ func _description_entities():
 	return description
 
 func has_resource():
-	return item != "Empty"
+	return item != null
+
+func has_room():
+	return subtiles.has_room()
+
+func add_item(item, quantity):
+	self.item = load("res://UI/ObjectUI.gd").new(item)
+	self.quantity = quantity
+	
+	subtiles.add_random(self.item, quantity)
 
 func gather():
 	if quantity > 0:
 		quantity -= 5
 		if quantity <= 0:
-			item = "Empty"
+			item = null

@@ -3,22 +3,40 @@ extends PanelContainer
 var style_default = preload("res://UI/SlotUI.tres")
 var style_selected = preload("res://UI/SlotUI_selected.tres")
 
-var frames = {}
+var subtile_sprites = []
 
 func _ready():
-	pass
+	var subtiles = slot().subtiles
+	var scale = 1.0/max(subtiles.height(), subtiles.width())
+	var slot_rect = self.rect_size
+	slot_rect *= scale
+	for y in range (subtiles.height()):
+		for x in range(subtiles.width()):
+			var sprite = subtile_sprites[x][y]
+			sprite.scale = Vector2(scale, scale)
+			sprite.position = Vector2(slot_rect.x * x, slot_rect.y * y)
+			sprite.centered = false
 
-func _init():
-	frames["Boulder"] = [3, 4, 5]
-	frames["Tree"] = [9, 10, 11]
-	frames["Empty"] = [14]
-	frames["Bush"] = [8, 13]
-	frames["Log"] = [12]
-	frames["Rock"] = [6, 7]
+func _init_subtile_sprite():
+	$Sprite.queue_free()
+	
+	var subtiles = slot().subtiles
+	for y in range(subtiles.height()):
+		var row = []
+		for x in range(subtiles.width()):
+			var sprite = Sprite.new()
+			row.append(sprite)
+			add_child(sprite)
+		subtile_sprites.append(row)
 
 func update_sprite():
-	var item_frames = frames[$Slot.item]
-	$Sprite.frame = item_frames[randi() % item_frames.size()]
+	if subtile_sprites.empty():
+		_init_subtile_sprite()
+	
+	var subtiles = slot().subtiles
+	for y in range(subtiles.height()):
+		for x in range(subtiles.width()):
+			subtiles.item(x, y).update_sprite(subtile_sprites[x][y])
 	
 	#if _has_player():
 	#	for neighbor in $Slot.neighbors:

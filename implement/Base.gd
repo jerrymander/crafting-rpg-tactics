@@ -9,10 +9,10 @@ onready var tileInfoText = $Info/TileInfo/Text
 
 func _ready():
 	randomize()
-	_reset()
-	$Reset.connect("pressed", self, "_reset")
 	add_to_group("player_update")
 	add_to_group("tile_update")
+	_reset()
+	$Reset.connect("pressed", self, "_reset")
 
 func _reset():
 	slots_ui = []
@@ -48,13 +48,14 @@ func _reset():
 	$Stats/AP.setup("AP")
 	_update_stats(player_ui.player())
 	slots_ui[2][2].add_child(player_ui)
+	get_tree().call_group("player_update", "player_update", player_ui.player())
 	slots_ui[2][2].update_sprite()
 	
-	_fill_slot("Tree", 3)
-	_fill_slot("Boulder", 3)
-	_fill_slot("Bush", 2)
-	_fill_slot("Log", 1)
-	_fill_slot("Rock", 2)
+	_fill_slot("Tree", 6)
+	_fill_slot("Boulder", 6)
+	_fill_slot("Bush", 4)
+	_fill_slot("Log", 2)
+	_fill_slot("Rock", 4)
 	
 	_update_action_menu()
 
@@ -74,8 +75,8 @@ func _link_neighbors():
 func _fill_slot(item, count):
 	for x in range(count):
 		var empty_slot = _get_empty_slot().slot()
-		empty_slot.item = item
-		empty_slot.quantity = randi() % 20 + 20
+		var quantity = randi() % 20 + 20
+		empty_slot.add_item(item, quantity)
 		empty_slot.get_parent().update_sprite()
 
 func _select_slot(slot_ui):
@@ -124,7 +125,7 @@ func _get_empty_slot():
 	var empty_slots = []
 	for x in range (slots_ui.size()):
 		for y in range (slots_ui[x].size()):
-			if slots_ui[x][y].slot().item == "Empty":
+			if slots_ui[x][y].slot().has_room():
 				empty_slots.append(slots_ui[x][y])
 	return empty_slots[randi() % empty_slots.size()]
 
@@ -137,6 +138,9 @@ func _remove_and_free_children(parent):
 func player_update(player):
 	_update_stats(player)
 	_update_action_menu()
+	
+	var player_slot = player.get_parent().get_parent().slot()
+	$Subtile.update_detail(player_slot)
 
 func _update_stats(player):
 	$Stats/HP.update(player.hp)
