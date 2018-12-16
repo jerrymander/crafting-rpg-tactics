@@ -5,7 +5,7 @@
 [ext_resource path="res://UI/SubtileUI.gd" type="Script" id=3]
 [ext_resource path="res://UI/SlotUI.tres" type="StyleBox" id=4]
 
-[node name="Base" type="Panel"]
+[node name="Base" type="Panel" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -104,7 +104,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 80.0
+margin_right = 81.0
 margin_bottom = 41.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
@@ -148,7 +148,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 80.0
+margin_right = 81.0
 margin_bottom = 65.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
