@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Player/PlayerUI.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
-[ext_resource path="res://Player/CTRPG Char (Normal Size).png" type="Texture" id=3]
+[ext_resource path="res://Creatures/rollcake melon.png" type="Texture" id=3]
 [ext_resource path="res://LoopSprite.gd" type="Script" id=4]
 
 [node name="PlayerUI" type="Node2D"]
@@ -19,8 +19,9 @@ script = ExtResource( 2 )
 texture = ExtResource( 3 )
 centered = false
 vframes = 4
-hframes = 4
+hframes = 14
 script = ExtResource( 4 )
+_sections_unfolded = [ "Animation" ]
 animation_delay = 30
 
 

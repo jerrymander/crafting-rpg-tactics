@@ -1,0 +1,32 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/rollcake melon.png-97841859c92b4f308e8d6321051166ce.stex"
+
+[deps]
+
+source_file="res://Creatures/rollcake melon.png"
+source_md5="6f10ca4b599bb8e480128efb1cfaf0b5"
+
+dest_files=[ "res://.import/rollcake melon.png-97841859c92b4f308e8d6321051166ce.stex" ]
+dest_md5="b4c08e9f604053857b618b70c9135058"
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0

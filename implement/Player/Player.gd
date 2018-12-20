@@ -5,6 +5,9 @@ var max_ap = 12
 
 var hp = 8
 var ap = 12
+var strength = 5
+var defense = 0
+
 
 var crafting_levels = {}
 
